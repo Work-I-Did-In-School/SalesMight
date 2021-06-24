@@ -4,7 +4,7 @@ June 23, 2021
 
 ## Description
 
-A RESTful api that supports basic authentication and bearer token authentication
+A RESTful api that supports basic authentication, bearer token authentication, and Access Control Lists (ACL)
 
 <!-- [https://cs-bearer-auth.herokuapp.com/](https://cs-bearer-auth.herokuapp.com/) -->
 
@@ -130,7 +130,7 @@ npm start
 
 ---
 
-## Resource rotes
+## Resource routes
 
 ### /api/v2/food
 
