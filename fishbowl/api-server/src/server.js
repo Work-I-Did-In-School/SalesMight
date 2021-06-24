@@ -2,11 +2,11 @@
 
 const express = require('express');
 
-const notFoundHandler = require('./error-handlers/404.js');
-const errorHandler = require('./error-handlers/500.js');
-const logger = require('./middleware/logger.js');
+const notFoundHandler = require('./error-handlers/404.js.js');
+const errorHandler = require('./error-handlers/500.js.js');
+const logger = require('./middleware/logger.js.js');
 
-const v1Routes = require('./routes/v1.js');
+const v1Routes = require('./routes/v1.js.js');
 
 const app = express();
 
