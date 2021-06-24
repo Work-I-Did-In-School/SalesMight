@@ -31,9 +31,11 @@ npm start
 * Inputs:
   * username: `STRING`, `required = true`
   * password: `STRING`, `required = true`
+  * roles: `user || `
 * JSON response:
   * Returns a newly created `user` record
   * Token: `STRING`
+  * Capabilities: `ENUM`(?)
   * username: `STRING`
   * password: `STRING`
   * createdAt: `STRING`
@@ -42,14 +44,21 @@ npm start
 ```JSON
 {
   "user": {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluLWJhc2ljIiwiaWF0IjoxNjI0NDc1ODE4fQ.YuADsDdEwndhzw1xD2slDZN87LiIsLzZc5xdacKslrM",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluLWJhc2ljIiwiaWF0IjoxNjI0NDkyODk1fQ.822_6y_gUA7wlTUW-BCcsqFZAr9vip5GoxBT4xzKq0s",
+    "capabilities": [
+      "read",
+      "create",
+      "update",
+      "delete"
+    ],
     "id": 1,
     "username": "admin-basic",
-    "password": "$2b$10$E4OBsMw1nBjb3iNchmox4OG5AZlVLft1BpmPovo9VJBwKpspQMwK.",
-    "updatedAt": "2021-06-23T19:16:58.709Z",
-    "createdAt": "2021-06-23T19:16:58.709Z"
+    "password": "$2b$10$bgWWIUj9FzVTGSNjTj9Cce87HgeJO6I/IlKxb9XZriEhtpddOyXBq",
+    "role": "admin",
+    "updatedAt": "2021-06-24T00:01:35.450Z",
+    "createdAt": "2021-06-24T00:01:35.450Z"
   },
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluLWJhc2ljIiwiaWF0IjoxNjI0NDc1ODE4fQ.YuADsDdEwndhzw1xD2slDZN87LiIsLzZc5xdacKslrM"
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluLWJhc2ljIiwiaWF0IjoxNjI0NDkyODk1fQ.822_6y_gUA7wlTUW-BCcsqFZAr9vip5GoxBT4xzKq0s"
 }
 ```
 
