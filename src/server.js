@@ -9,7 +9,7 @@ const morgan = require('morgan');
 const errorHandler = require('./error-handlers/500.js');
 const notFound = require('./error-handlers/404.js');
 const authRoutes = require('./routes/auth/routes.js');
-const resourceRoutes = require('./routes/v1');
+const v2Routes = require('./routes/v2');
 
 // Prepare the express app
 const app = express();
@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use(authRoutes);
-app.use(resourceRoutes);
+app.use('/api/v2', v2Routes);
 
 // Catchalls
 app.use(notFound);

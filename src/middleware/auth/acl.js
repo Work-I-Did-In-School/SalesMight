@@ -9,7 +9,10 @@ module.exports = (capability) => {
         next();
       }
       else {
-        next('Access Denied');
+        res.status(403).json({
+          status: 403,
+          message: 'access denied',
+        });
       }
     } catch (e) {
       next('Invalid Login');
