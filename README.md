@@ -2,6 +2,9 @@
 
 June 23, 2021
 
+## Creators:
+Cullen Sharp and Tim Egorov
+
 ## Description
 
 A RESTful api that supports basic authentication, bearer token authentication, and Access Control Lists (ACL)
@@ -19,7 +22,8 @@ npm start
 
 ## UML
 
-![Basic authentication process](UML.png)
+![Basic authentication process](UML1.JPG)
+![schemas](UML2.JPG)
 
 ## Routes
 
