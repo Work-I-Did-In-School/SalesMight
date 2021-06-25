@@ -21,24 +21,35 @@ router.param('model', (req, res, next) => {
     next('Invalid Model');
   }
 });
-
-router.get('/:model', bearerAuth, permissions('read'), handleGetAll);
-router.get('/:model/:id', bearerAuth, permissions('read'), handleGetOne);
+/** 
+ * @param 
+*/
+router.get('/:model', bearerAuth, permissions('read'), handleGetAll); // 
+router.get('/:model/:id', bearerAuth, permissions('read'), handleGetOne); // sends back all customers associates with a sales person
+router.get('/:model/:id/:id', bearerAuth, permissions('read'), handleGetOne);
 router.post('/:model', bearerAuth, permissions('create'), handleCreate);
 router.put('/:model/:id', bearerAuth, permissions('update'), handleUpdate);
 router.delete('/:model/:id', bearerAuth, permissions('delete'), handleDelete);
+
 
 async function handleGetAll(req, res) {
   let allRecords = await req.model.findAll();
   res.status(200).json(allRecords);
 }
 
+// TODO: change to get associations
 async function handleGetOne(req, res) {
+  console.log(req.params);
   const id = req.params.id;
   let theRecord = await req.model.findOne({ where: { id:id }});
   res.status(200).json(theRecord);
 }
 
+// async function handleGetCustomers(req, res) {
+//   const id = req
+// }
+
+// TODO: handler to specifically create notes
 async function handleCreate(req, res) {
   let obj = req.body;
   let newRecord = await req.model.create(obj);
