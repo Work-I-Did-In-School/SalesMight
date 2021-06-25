@@ -7,7 +7,7 @@ Cullen Sharp and Tim Egorov
 
 ## Description
 
-A RESTful api that supports basic authentication, bearer token authentication, and Access Control Lists (ACL)
+SalesMight is mock CRM. It runs on Node.js with Express and supports role based access control with an access control list backed up by bearer and basic authentication.
 
 <!-- [https://cs-bearer-auth.herokuapp.com/](https://cs-bearer-auth.herokuapp.com/) -->
 
@@ -35,11 +35,13 @@ npm start
 * Inputs:
   * username: `STRING`, `required = true`
   * password: `STRING`, `required = true`
-  * roles: `user || `
+  * roles: `salesPerson || accountManager`
 * JSON response:
   * Returns a newly created `user` record
   * Token: `STRING`
-  * Capabilities: `ENUM`(?)
+  * Capabilities: `ENUM 
+    * accountManger: ['read','update']
+    * salesPerson: ['read', 'create','update','delete']
   * username: `STRING`
   * password: `STRING`
   * createdAt: `STRING`
@@ -56,9 +58,9 @@ npm start
       "delete"
     ],
     "id": 1,
-    "username": "admin-basic",
+    "username": "tom quota",
     "password": "$2b$10$bgWWIUj9FzVTGSNjTj9Cce87HgeJO6I/IlKxb9XZriEhtpddOyXBq",
-    "role": "admin",
+    "role": "salesPerson",
     "updatedAt": "2021-06-24T00:01:35.450Z",
     "createdAt": "2021-06-24T00:01:35.450Z"
   },
@@ -93,9 +95,9 @@ npm start
       "delete"
     ],
     "id": 1,
-    "username": "admin-basic",
+    "username": "tom quota",
     "password": "$2b$10$bgWWIUj9FzVTGSNjTj9Cce87HgeJO6I/IlKxb9XZriEhtpddOyXBq",
-    "role": "admin",
+    "role": "salesPerson",
     "updatedAt": "2021-06-24T00:01:35.450Z",
     "createdAt": "2021-06-24T00:01:35.450Z"
   },
@@ -136,7 +138,7 @@ npm start
 
 ## Resource routes
 
-### /api/v2/food
+### /api/v2/notes
 
 #### GET
 
@@ -145,30 +147,28 @@ npm start
     * Bearer Token
     * Read permissions
   * response
-    * A list of all food records as an `Array`
+    * A list of all notes records as an `Array`
 
 ```JSON
 [
   {
     "id": 1,
-    "name": "string beans",
-    "calories": 100,
-    "type": "fruit",
+    "customerId": 2,
+    "text": "Had a phone call with Connie today",
     "createdAt": "2021-06-24T00:42:01.687Z",
     "updatedAt": "2021-06-24T00:42:01.687Z"
   },
   {
     "id": 2,
-    "name": "pineapple",
-    "calories": 100,
-    "type": "fruit",
+    "customerId": 3,
+    "text": "Discussed options with max",
     "createdAt": "2021-06-24T01:19:35.626Z",
     "updatedAt": "2021-06-24T01:19:35.626Z"
   }
 ]
 ```
 
-### /api/v2/food/:id
+### /api/v2/customers/:id
 
 #### GET
 
@@ -176,146 +176,40 @@ npm start
 * Inputs:
   * Read permissions
   * Id: `INTEGER`
+* returns a list of all customers associated with a salesperson
 * JSON response:
   * id: `INTEGER`
+  * salesPerson: `INTEGER`
   * name: `STRING`
-  * calories: `INTEGER`
-  * type: `STRING`
+  * email: `INTEGER`
+  * phone: `STRING`
+  * title: `STRING`
   * createdAt: `STRING`
   * updatedAT: `STRING`
-
-```JSON
-{
-  "id": 2,
-  "name": "pineapple",
-  "calories": 100,
-  "type": "fruit",
-  "createdAt": "2021-06-24T01:19:35.626Z",
-  "updatedAt": "2021-06-24T01:19:35.626Z"
-}
-```
-
-### POST
-
-* Status code: 201
-* Inputs:
-  * Create permissions
-  * JSON:
-    * Name: `STRING`
-    * Calories: `INTEGER`
-    * Type: `STRING`
-* JSON response
-  * id: `INTEGER`
-  * name: `STRING`
-  * calories: `INTEGER`
-  * type: `STRING`
-  * createdAt: `STRING`
-  * updatedAT: `STRING`
-
-```JSON
-{
-  "id": 2,
-  "name": "pineapple",
-  "calories": 100,
-  "type": "fruit",
-  "createdAt": "2021-06-24T01:19:35.626Z",
-  "updatedAt": "2021-06-24T01:19:35.626Z"
-}
-```
-
-### PUT
-
-* Status code: 203
-* Inputs:
-  * Update permissions
-  * id: `INTEGER`
-  * JSON:
-    * Name: `STRING`
-    * Calories: `INTEGER`
-    * Type: `STRING`
-* JSON response
-  * id: `INTEGER`
-  * name: `STRING`
-  * calories: `INTEGER`
-  * type: `STRING`
-  * createdAt: `STRING`
-  * updatedAT: `STRING`
-
-```JSON
-{
-  "id": 2,
-  "name": "pineapple",
-  "calories": 100,
-  "type": "fruit",
-  "createdAt": "2021-06-24T01:19:35.626Z",
-  "updatedAt": "2021-06-24T01:19:35.626Z"
-}
-```
-
-### DELETE
-
-* Status code: 204
-* Inputs:
-  * Delete permissions
-  * id: `INTEGER`
-
-### /api/v2/clothes
-
-#### GET
-
-* status code: 200
-  * Inputs: ()
-    * Bearer Token
-    * Read permissions
-  * response
-    * A list of all clothes records as an `Array`
 
 ```JSON
 [
   {
-    "id": 1,
-    "name": "pleather jeans",
-    "color": "black",
-    "size": "tiny",
+    "id": 2,
+    "salesPerson": 2,
+    "name": "connie long",
+    "email": "scam@aol.com",
+    "phone": "(505) 557-4793",
+    "title": "Regional Assistant to the Vice Assistant",
     "createdAt": "2021-06-24T01:19:35.626Z",
     "updatedAt": "2021-06-24T01:19:35.626Z"
   },
-  {
-    "id": 2,
-    "name": "denim jeans",
-    "color": "blue",
-    "size": "large",
+    {
+    "id": 1,
+    "salesPerson": 2,
+    "name": "potential mark",
+    "email": "sucker@aol.com",
+    "phone": "(432) 432-4322",
+    "title": "Regional Assistant to the Vice Assistant",
     "createdAt": "2021-06-24T01:19:35.626Z",
     "updatedAt": "2021-06-24T01:19:35.626Z"
-  }
+  },
 ]
-```
-
-### /api/v2/clothes/:id
-
-#### GET
-
-* Status code: 200
-* Inputs:
-  * Read permissions
-  * id: `INTEGER`
-* JSON response:
-  * id: `INTEGER`
-  * name: `STRING`
-  * color: `INTEGER`
-  * size: `STRING`
-  * createdAt: `STRING`
-  * updatedAT: `STRING`
-
-```JSON
-{
-  "id": 2,
-  "name": "denim jeans",
-  "color": "blue",
-  "size": "large",
-  "createdAt": "2021-06-24T01:19:35.626Z",
-  "updatedAt": "2021-06-24T01:19:35.626Z"
-}
 ```
 
 ### POST
@@ -324,55 +218,69 @@ npm start
 * Inputs:
   * Create permissions
   * JSON:
+    * id: `INTEGER`
+    * salesPerson: `INTEGER`
     * name: `STRING`
-    * color: `INTEGER`
-    * size: `STRING`
-* JSON response
+    * email: `INTEGER`
+    * phone: `STRING`
+    * title: `STRING`
+* JSON response:
   * id: `INTEGER`
+  * salesPerson: `INTEGER`
   * name: `STRING`
-  * color: `INTEGER`
-  * size: `STRING`
+  * email: `INTEGER`
+  * phone: `STRING`
+  * title: `STRING`
   * createdAt: `STRING`
   * updatedAT: `STRING`
 
 ```JSON
 {
   "id": 2,
-  "name": "denim jeans",
-  "color": "blue",
-  "size": "large",
+  "salesPerson": 2,
+  "name": "connie long",
+  "email": "scam@aol.com",
+  "phone": "(505) 557-4793",
+  "title": "Regional Assistant to the Vice Assistant",
   "createdAt": "2021-06-24T01:19:35.626Z",
   "updatedAt": "2021-06-24T01:19:35.626Z"
-}
+},
 ```
 
 ### PUT
 
 * Status code: 203
 * Inputs:
-  * Update permissions
-  * id: `INTEGER`
+  * Create permissions
   * JSON:
+    * id: `INTEGER`
+    * salesPerson: `INTEGER`
     * name: `STRING`
-    * color: `INTEGER`
-    * size: `STRING`
-* JSON response
+    * email: `INTEGER`
+    * phone: `STRING`
+    * title: `STRING`
+* JSON response:
   * id: `INTEGER`
+  * salesPerson: `INTEGER`
   * name: `STRING`
-  * color: `INTEGER`
-  * size: `STRING`
+  * email: `INTEGER`
+  * phone: `STRING`
+  * title: `STRING`
   * createdAt: `STRING`
   * updatedAT: `STRING`
+
 
 ```JSON
 {
   "id": 2,
-  "name": "denim jeans",
-  "color": "blue",
-  "size": "large",
+  "salesPerson": 2,
+  "name": "connie long",
+  "email": "scam@aol.com",
+  "phone": "(505) 557-4793",
+  "title": "Regional Assistant to the Vice Assistant",
   "createdAt": "2021-06-24T01:19:35.626Z",
   "updatedAt": "2021-06-24T01:19:35.626Z"
-}
+},
 ```
 
 ### DELETE
@@ -382,8 +290,40 @@ npm start
   * Delete permissions
   * id: `INTEGER`
 
-## Contributors
+### /api/v2/customers/:salespersonid/customerid
 
-Tim Egorov, Tek Jones.
+### GET
 
-<!--  -->
+* Status code: 200
+* Inputs:
+  * Read permissions
+  * Id: `INTEGER`
+* returns a single customer with all notes associated with them
+* JSON response:
+  * id: `INTEGER`
+  * salesPerson: `INTEGER`
+  * name: `STRING`
+  * email: `INTEGER`
+  * phone: `STRING`
+  * title: `STRING`
+  * createdAt: `STRING`
+  * updatedAT: `STRING`
+
+
+```JSON
+{
+  "id": 2,
+  "salesPerson": 2,
+  "name": "connie long",
+  "email": "scam@aol.com",
+  "phone": "(505) 557-4793",
+  "title": "Regional Assistant to the Vice Assistant",
+  "createdAt": "2021-06-24T01:19:35.626Z",
+  "updatedAt": "2021-06-24T01:19:35.626Z",
+  "notes": [{
+    "customerId": 2,
+    "text": "Connie is very long"
+    }
+  ]
+}
+```
