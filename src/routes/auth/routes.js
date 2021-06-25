@@ -31,10 +31,6 @@ authRouter.post('/signin', basicAuth, (req, res, next) => {
   res.status(200).json(user);
 });
 
-// returns all user records provided user is
-// signedup
-// signedin
-// and has 'delete' permissions 
 authRouter.get('/users', bearerAuth, permissions('delete'), async (req, res, next) => {
   const userRecords = await users.findAll({});
   const list = userRecords.map(user => user.username);
