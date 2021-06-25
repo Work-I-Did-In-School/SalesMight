@@ -5,6 +5,7 @@ const express = require('express');
 const router = express.Router();
 
 // Esoteric Resources
+const { notes } = require('../models/index');
 const dataModules = require('../models');
 const bearerAuth = require('../middleware/auth/bearer.js');
 const permissions = require('../middleware/auth/acl.js');
@@ -24,9 +25,9 @@ router.param('model', (req, res, next) => {
 /** 
  * @param 
 */
-router.get('/:model', bearerAuth, permissions('read'), handleGetAll); // 
-router.get('/:model/:id', bearerAuth, permissions('read'), handleGetOne); // sends back all customers associates with a sales person
-router.get('/:model/:id/:id', bearerAuth, permissions('read'), handleGetOne);
+router.get('/:model', bearerAuth, permissions('read'), handleGetAll); 
+router.get('/:model/:id', bearerAuth, permissions('read'), handleGetSome); // sends back all customers associates with a sales person
+router.get('/:model/:salespersonid/:customerid', bearerAuth, permissions('read'), handleGetOne); // one customer and notes
 router.post('/:model', bearerAuth, permissions('create'), handleCreate);
 router.put('/:model/:id', bearerAuth, permissions('update'), handleUpdate);
 router.delete('/:model/:id', bearerAuth, permissions('delete'), handleDelete);
@@ -39,15 +40,23 @@ async function handleGetAll(req, res) {
 
 // TODO: change to get associations
 async function handleGetOne(req, res) {
-  console.log(req.params);
-  const id = req.params.id;
-  let theRecord = await req.model.findOne({ where: { id:id }});
+  const {salespersonid, customerid} = req.params;
+
+  let theRecord = await req.model.findOne({ 
+    where: { id:customerid },
+    include: notes,
+  });
   res.status(200).json(theRecord);
 }
 
-// async function handleGetCustomers(req, res) {
-//   const id = req
-// }
+async function handleGetSome(req, res) {
+  const id = req.params.id;
+
+  let records = await req.model.findAll({
+    where: {salesPerson: id},
+  });
+  res.status(200).json(records);
+}
 
 // TODO: handler to specifically create notes
 async function handleCreate(req, res) {
